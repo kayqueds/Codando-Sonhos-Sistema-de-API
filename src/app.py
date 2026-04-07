@@ -6,7 +6,7 @@ app = Flask(__name__)
 
 @app.route('/')
 
-def principal():
+def raiz():
     return 'Hello World'
 
 if __name__ == '__main__':
