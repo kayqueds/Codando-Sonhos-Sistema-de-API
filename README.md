@@ -75,7 +75,7 @@ API REST para gerenciamento de usuários, desenvolvida em Python para a discipli
 
   * Baixe o script SQL no link abaixo:
 
-  https://github.com/kayqueds/Codando-Sonhos-Sistema-de-API/raw/main/database/schema.sql
+  https://github.com/kayqueds/Codando-Sonhos-Sistema-de-API/raw/dev/src/database/schema.sql
 
   <br>
 
