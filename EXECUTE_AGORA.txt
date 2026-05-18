@@ -1,0 +1,64 @@
+🎯 PASSOS EXATOS PARA RODAR SEU PROJETO AGORA
+
+═══════════════════════════════════════════════════════════════════
+
+1️⃣ ABRA POWERSHELL
+
+   Windows: Pressione Win + R
+   Digite: powershell
+   Pressione: Enter
+
+
+2️⃣ NAVEGUE AO PROJETO
+
+   Digite:
+   cd "c:\Users\Henrique\Desktop\PROJETOS FINAIS\Projeto_QA"
+   
+   Pressione: Enter
+
+
+3️⃣ EXECUTE O SERVIDOR
+
+   Digite UMA DESSAS OPÇÕES:
+   
+   OPÇÃO 1 (Simples):
+   python -m src
+   
+   OPÇÃO 2 (Via script):
+   .\setup.ps1 -run
+   
+   OPÇÃO 3 (Automático - instala tudo):
+   .\setup.ps1 -init
+
+
+4️⃣ AGUARDE A MENSAGEM
+
+   Você verá algo como:
+   
+   * Serving Flask app 'src.app'
+   * Debug mode: on
+   * Running on http://127.0.0.1:5000
+   
+   Isso significa: ✅ SUCESSO!
+
+
+5️⃣ ABRA O NAVEGADOR
+
+   Cole na barra de endereço:
+   http://127.0.0.1:5000
+   
+   Pressione: Enter
+
+
+6️⃣ VOCÊ VERÁ A PÁGINA HOME
+
+   Clique em:
+   • "Cadastro" - para criar conta
+   • "Login" - para fazer login
+
+
+═══════════════════════════════════════════════════════════════════
+
+PRONTO! Seu projeto está funcionando! 🎉
+
+═══════════════════════════════════════════════════════════════════

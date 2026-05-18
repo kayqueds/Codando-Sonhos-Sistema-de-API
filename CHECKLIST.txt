@@ -1,0 +1,330 @@
+✅ CHECKLIST DE CONFIGURAÇÃO - PROJETO PRONTO
+
+═══════════════════════════════════════════════════════════════════
+
+Antes de começar, certifique-se:
+
+📋 PRÉ-REQUISITOS
+─────────────────────────────────────────────────────────────────
+□ Python 3.8+ instalado
+□ MySQL rodando (Services ou MySQL Workbench)
+□ Git instalado (para versionamento)
+□ Editor VS Code (ou sua preferência)
+
+
+🔧 CONFIGURAÇÃO INICIAL
+─────────────────────────────────────────────────────────────────
+
+□ PASSO 1: Criar banco de dados MySQL
+
+  Opção 1 - Via MySQL Workbench:
+    1. Abra MySQL Workbench
+    2. Clique em +
+    3. Nome: sistema_api
+    4. Clique "Apply"
+
+  Opção 2 - Via Terminal:
+    mysql -u root -p
+    # Digite senha: 99261632
+    CREATE DATABASE IF NOT EXISTS sistema_api;
+    EXIT;
+
+
+□ PASSO 2: Navegar até o projeto
+
+  Abra PowerShell:
+    Win + R → powershell → Enter
+
+  Digite:
+    cd "c:\Users\Henrique\Desktop\PROJETOS FINAIS\Projeto_QA"
+
+
+□ PASSO 3: Executar setup automático
+
+  Digite:
+    .\setup.ps1 -init
+
+  OU manualmente:
+    
+    pip install -r requirements.txt
+    python init_db.py
+    python -m src.app
+
+
+□ PASSO 4: Verificar se servidor iniciou
+
+  Você deve ver:
+    * Running on http://127.0.0.1:5000
+
+  Se vir erro: Verifique a seção "Possíveis Erros"
+
+
+□ PASSO 5: Testar no navegador
+
+  Abra: http://127.0.0.1:5000
+
+  Você deve ver: Página HOME com opções de cadastro e login
+
+
+─────────────────────────────────────────────────────────────────
+
+
+🎯 TESTE RÁPIDO DA FUNCIONALIDADE
+─────────────────────────────────────────────────────────────────
+
+□ 1. Clique em "CADASTRO"
+
+□ 2. Preencha o formulário:
+   Nome: João Silva
+   Email: joao@example.com
+   Senha: senha123
+
+□ 3. Clique "Cadastrar"
+   Esperado: Mensagem de sucesso
+
+□ 4. Clique em "Fazer login"
+
+□ 5. Preencha:
+   Email: joao@example.com
+   Senha: senha123
+
+□ 6. Clique "Login"
+   Esperado: Redirecionamento para Dashboard
+
+□ 7. No Dashboard, clique "Gerenciar Filmes"
+
+□ 8. Adicione um filme:
+   Título: Inception
+   Descrição: Um filme incrível sobre sonhos
+
+□ 9. Clique "Adicionar"
+   Esperado: Filme aparece na lista
+
+
+─────────────────────────────────────────────────────────────────
+
+
+🧪 TESTE DOS TESTES AUTOMATIZADOS
+─────────────────────────────────────────────────────────────────
+
+□ Abra novo terminal PowerShell
+
+□ Navegue até o projeto:
+   cd "c:\Users\Henrique\Desktop\PROJETOS FINAIS\Projeto_QA"
+
+□ Execute:
+   pytest tests/test_app.py -v
+
+□ Resultado esperado:
+   ✅ 8 testes passando (100%)
+
+
+─────────────────────────────────────────────────────────────────
+
+
+📊 VERIFYAR BANCO DE DADOS
+─────────────────────────────────────────────────────────────────
+
+□ Abra MySQL Workbench
+
+□ Conecte em localhost:3306
+
+□ Procure banco "sistema_api"
+
+□ Expanda e verifique:
+   Tabela: users
+   - id (INT, PK)
+   - name (VARCHAR)
+   - email (VARCHAR, UNIQUE)
+   - password_hash (VARCHAR)
+   - created_at (DATETIME)
+
+   Tabela: movies
+   - id (INT, PK)
+   - title (VARCHAR)
+   - description (TEXT)
+   - user_id (INT, FK)
+   - created_at (DATETIME)
+
+
+─────────────────────────────────────────────────────────────────
+
+
+📝 DOCUMENTOS CRIADOS (CONSULTE SE NECESSÁRIO)
+─────────────────────────────────────────────────────────────────
+
+□ LEIA_PRIMEIRO.txt          ← Você está aqui
+□ COMECE_AQUI.md             ← Guia rápido (5 min)
+□ GUIA_EXECUCAO.md           ← Documentação técnica
+□ RESUMO_MUDANCAS.md         ← O que foi criado/alterado
+□ README.md                  ← Visão geral
+□ docs/TESTES_MANUAIS.md     ← Testes manuais
+□ docs/ANALISE_RESULTADOS.md ← Resultados
+□ docs/MELHORIAS_SUGERIDAS.md ← Features futuras
+
+
+─────────────────────────────────────────────────────────────────
+
+
+⚠️  POSSÍVEIS ERROS E SOLUÇÕES
+─────────────────────────────────────────────────────────────────
+
+❌ "Connection refused" ou "MySQL connection error"
+   
+   □ Verificar se MySQL está rodando:
+     - Windows Services → MySQL80 → Status: Executando
+     - Ou abrir MySQL Workbench
+   
+   □ Verificar credenciais em .env:
+     DB_USER=root
+     DB_PASSWORD=99261632
+     DB_HOST=localhost
+     DB_PORT=3306
+   
+   □ Se usou outra senha no MySQL, ajuste em .env
+
+
+❌ "Database does not exist"
+
+   □ Verifique se o banco "sistema_api" foi criado
+   
+   □ Execute novamente:
+     python init_db.py
+
+
+❌ "ModuleNotFoundError" ou "ImportError"
+
+   □ Instale as dependências:
+     pip install -r requirements.txt
+   
+   □ Se o pip.exe não funcionar:
+     python -m pip install -r requirements.txt
+
+
+❌ "Address already in use"
+
+   □ Outro processo está na porta 5000
+   
+   □ Solução 1: Parar o outro servidor (CTRL+C)
+   
+   □ Solução 2: Usar outra porta no src/app.py:
+     if __name__ == '__main__':
+         app.run(debug=True, port=5001)
+
+
+❌ "Port 5000 not found" no navegador
+
+   □ Verifique se o servidor está realmente rodando
+   
+   □ Procure: "Running on http://127.0.0.1:5000"
+   
+   □ Se não encontrar, execute:
+     python -m src.app
+
+
+❌ Formulário não funciona / Erro ao cadastrar
+
+   □ Verifique o console do navegador:
+     F12 → Console → Procure erros
+   
+   □ Verifique se o servidor está rodando
+   
+   □ Teste via Postman (veja GUIA_EXECUCAO.md)
+
+
+─────────────────────────────────────────────────────────────────
+
+
+🚀 PRÓXIMOS PASSOS (APÓS CONFIGURAÇÃO)
+─────────────────────────────────────────────────────────────────
+
+1. □ Testar todas as funcionalidades (cadastro, login, filmes)
+
+2. □ Tirar screenshots para a pasta "evidencias/"
+   (Para documentação do projeto)
+
+3. □ Executar os testes automatizados
+
+4. □ Explorar a pasta "docs/" para entender mais
+
+5. □ Se quiser adicionar features, veja:
+   docs/MELHORIAS_SUGERIDAS.md (25+ sugestões)
+
+6. □ Usar Postman para testar a API:
+   postman/API_Collection.json
+
+
+─────────────────────────────────────────────────────────────────
+
+
+📞 RESUMO DOS COMANDOS IMPORTANTES
+─────────────────────────────────────────────────────────────────
+
+Inicial (completo):
+  .\setup.ps1 -init
+
+Apenas servidor:
+  python -m src.app
+
+Apenas banco de dados:
+  python init_db.py
+
+Apenas testes:
+  pytest tests/test_app.py -v
+
+Instalar dependências:
+  pip install -r requirements.txt
+
+Parar servidor:
+  CTRL + C
+
+
+─────────────────────────────────────────────────────────────────
+
+
+✅ VERIFICAÇÃO FINAL
+─────────────────────────────────────────────────────────────────
+
+Após a configuração, verifique se:
+
+□ Banco de dados "sistema_api" existe
+□ Tabelas "users" e "movies" foram criadas
+□ Servidor Flask roda sem erros
+□ Navegador acessa http://127.0.0.1:5000
+□ Você consegue cadastrar um usuário
+□ Login funciona e redireciona para dashboard
+□ Você consegue criar e listar filmes
+□ Logout limpa o token
+□ 8 testes automatizados passam
+
+
+─────────────────────────────────────────────────────────────────
+
+
+🎉 PARABÉNS!
+─────────────────────────────────────────────────────────────────
+
+Se conseguiu fazer toda a configuração, seu projeto está:
+
+✅ Totalmente funcional
+✅ Com banco de dados pronto
+✅ Com autenticação JWT funcionando
+✅ Com interface web responsiva
+✅ Com testes automatizados passando
+✅ Pronto para apresentação/demonstração
+
+
+═══════════════════════════════════════════════════════════════════
+
+Primeira coisa a fazer:
+
+  1. Abra PowerShell
+  2. cd "c:\Users\Henrique\Desktop\PROJETOS FINAIS\Projeto_QA"
+  3. .\setup.ps1 -init
+  4. Aguarde 2-3 minutos
+  5. Acesse http://127.0.0.1:5000
+
+═══════════════════════════════════════════════════════════════════
+
+Última atualização: 3 de maio de 2026
+Status: ✅ PRONTO PARA USAR

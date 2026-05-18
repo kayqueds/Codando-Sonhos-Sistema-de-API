@@ -1,0 +1,136 @@
+╔════════════════════════════════════════════════════════════════╗
+║                                                                ║
+║           ✅ ERRO CORRIGIDO - TEMPLATE NOT FOUND              ║
+║                                                                ║
+║     Seu projeto Flask agora está pronto para rodar!           ║
+║                                                                ║
+╚════════════════════════════════════════════════════════════════╝
+
+
+🔧 O QUE FOI CORRIGIDO
+─────────────────────────────────────────────────────────────────
+
+Erro Original:
+  ❌ jinja2.exceptions.TemplateNotFound: home.html
+
+Causa:
+  O Flask procurava os templates no lugar errado
+
+Solução:
+  ✅ Configurei os caminhos corretos em src/app.py
+  ✅ Criei src/__main__.py para facilitar a execução
+  ✅ Atualizei o setup.ps1
+
+
+═════════════════════════════════════════════════════════════════
+
+
+🚀 COMO RODAR AGORA
+─────────────────────────────────────────────────────────────────
+
+PASSO 1: Abra PowerShell
+
+  Win + R → powershell → Enter
+
+
+PASSO 2: Navegue até o projeto
+
+  cd "c:\Users\Henrique\Desktop\PROJETOS FINAIS\Projeto_QA"
+
+
+PASSO 3: Execute um dos comandos abaixo:
+
+  ✅ OPÇÃO A - Mais Simples (Recomendada)
+     python -m src
+
+  ✅ OPÇÃO B - Via setup
+     .\setup.ps1 -run
+
+  ✅ OPÇÃO C - Automático (instala + cria DB + roda)
+     .\setup.ps1 -init
+
+
+PASSO 4: Aguarde a mensagem
+
+  "Running on http://127.0.0.1:5000"
+
+
+PASSO 5: Abra o navegador
+
+  http://127.0.0.1:5000
+
+
+✅ PRONTO! Você verá a página HOME
+
+
+═════════════════════════════════════════════════════════════════
+
+
+📋 O QUE MUDOU
+─────────────────────────────────────────────────────────────────
+
+✏️ src/app.py
+   ├─ Importou: os (para lidar com paths)
+   └─ Adicionou: template_folder e static_folder ao Flask()
+
+🆕 src/__main__.py
+   ├─ Novo arquivo
+   └─ Permite: python -m src
+
+✏️ setup.ps1
+   └─ Comando: python -m src.app → python -m src
+
+
+═════════════════════════════════════════════════════════════════
+
+
+🎯 TESTE RÁPIDO
+─────────────────────────────────────────────────────────────────
+
+1. Abra PowerShell
+2. cd "c:\Users\Henrique\Desktop\PROJETOS FINAIS\Projeto_QA"
+3. python -m src
+4. Aguarde: "Running on http://127.0.0.1:5000"
+5. Abra: http://127.0.0.1:5000
+6. Você deve ver: Página HOME com opções de Cadastro e Login
+
+✅ Se vir isso: Tudo funcionando!
+
+
+═════════════════════════════════════════════════════════════════
+
+
+💡 DICAS
+─────────────────────────────────────────────────────────────────
+
+• Se der erro, feche o terminal e abra um novo
+• Verifique se MySQL está rodando (Services)
+• Se na primeira vez, execute: python init_db.py
+• Para parar o servidor: CTRL + C
+
+
+═════════════════════════════════════════════════════════════════
+
+
+📚 DOCUMENTAÇÃO
+─────────────────────────────────────────────────────────────────
+
+Para mais detalhes sobre a correção, veja:
+  → CORRECAO_TEMPLATE.md
+
+
+═════════════════════════════════════════════════════════════════
+
+
+🎉 VOCÊ ESTÁ PRONTO!
+─────────────────────────────────────────────────────────────────
+
+Execute agora:
+
+  python -m src
+
+e acesse:
+
+  http://127.0.0.1:5000
+
+═════════════════════════════════════════════════════════════════

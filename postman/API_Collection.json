@@ -1,0 +1,401 @@
+{
+  "info": {
+    "name": "Sistema de Usuários e Filmes - API Collection",
+    "description": "Coleção completa de testes da API para o projeto de QA",
+    "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+  },
+  "item": [
+    {
+      "name": "Autenticação",
+      "item": [
+        {
+          "name": "Cadastrar Usuário",
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"name\": \"João Silva\",\n  \"email\": \"joao@example.com\",\n  \"password\": \"Senha123\"\n}"
+            },
+            "url": {
+              "raw": "{{base_url}}/auth/register",
+              "host": ["{{base_url}}"],
+              "path": ["auth", "register"]
+            }
+          },
+          "response": [
+            {
+              "name": "201 - Usuário Criado",
+              "status": "Created",
+              "code": 201,
+              "body": "{\"message\": \"Usuário criado com sucesso.\", \"user\": {\"id\": 1, \"name\": \"João Silva\", \"email\": \"joao@example.com\", \"created_at\": \"2026-05-03T12:00:00\"}}"
+            },
+            {
+              "name": "400 - Validação Falhou",
+              "status": "Bad Request",
+              "code": 400,
+              "body": "{\"errors\": [\"A senha deve ter ao menos 8 caracteres.\"]}"
+            },
+            {
+              "name": "409 - Email Duplicado",
+              "status": "Conflict",
+              "code": 409,
+              "body": "{\"message\": \"Email já cadastrado.\"}"
+            }
+          ]
+        },
+        {
+          "name": "Login",
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"email\": \"joao@example.com\",\n  \"password\": \"Senha123\"\n}"
+            },
+            "url": {
+              "raw": "{{base_url}}/auth/login",
+              "host": ["{{base_url}}"],
+              "path": ["auth", "login"]
+            }
+          },
+          "response": [
+            {
+              "name": "200 - Login Sucesso",
+              "status": "OK",
+              "code": 200,
+              "body": "{\"access_token\": \"eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9...\", \"user\": {\"id\": 1, \"name\": \"João Silva\", \"email\": \"joao@example.com\"}}"
+            },
+            {
+              "name": "401 - Credenciais Inválidas",
+              "status": "Unauthorized",
+              "code": 401,
+              "body": "{\"message\": \"Email ou senha inválidos.\"}"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "name": "Usuários",
+      "item": [
+        {
+          "name": "Listar Usuários",
+          "request": {
+            "method": "GET",
+            "header": [
+              {
+                "key": "Authorization",
+                "value": "Bearer {{token}}"
+              }
+            ],
+            "url": {
+              "raw": "{{base_url}}/users",
+              "host": ["{{base_url}}"],
+              "path": ["users"]
+            }
+          },
+          "response": [
+            {
+              "name": "200 - Sucesso",
+              "status": "OK",
+              "code": 200,
+              "body": "{\"users\": [{\"id\": 1, \"name\": \"João\", \"email\": \"joao@example.com\"}]}"
+            },
+            {
+              "name": "401 - Sem Token",
+              "status": "Unauthorized",
+              "code": 401,
+              "body": "{\"msg\": \"Missing Authorization Header\"}"
+            }
+          ]
+        },
+        {
+          "name": "Detalhes do Usuário",
+          "request": {
+            "method": "GET",
+            "header": [
+              {
+                "key": "Authorization",
+                "value": "Bearer {{token}}"
+              }
+            ],
+            "url": {
+              "raw": "{{base_url}}/users/1",
+              "host": ["{{base_url}}"],
+              "path": ["users", "1"]
+            }
+          }
+        },
+        {
+          "name": "Atualizar Usuário",
+          "request": {
+            "method": "PUT",
+            "header": [
+              {
+                "key": "Authorization",
+                "value": "Bearer {{token}}"
+              },
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"name\": \"João Silva Atualizado\",\n  \"email\": \"joao.novo@example.com\"\n}"
+            },
+            "url": {
+              "raw": "{{base_url}}/users/1",
+              "host": ["{{base_url}}"],
+              "path": ["users", "1"]
+            }
+          }
+        },
+        {
+          "name": "Deletar Usuário",
+          "request": {
+            "method": "DELETE",
+            "header": [
+              {
+                "key": "Authorization",
+                "value": "Bearer {{token}}"
+              }
+            ],
+            "url": {
+              "raw": "{{base_url}}/users/1",
+              "host": ["{{base_url}}"],
+              "path": ["users", "1"]
+            }
+          }
+        }
+      ]
+    },
+    {
+      "name": "Filmes Favoritos",
+      "item": [
+        {
+          "name": "Criar Filme",
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Authorization",
+                "value": "Bearer {{token}}"
+              },
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"title\": \"Inception\",\n  \"description\": \"Filme de ficção científica sobre sonhos\"\n}"
+            },
+            "url": {
+              "raw": "{{base_url}}/movies",
+              "host": ["{{base_url}}"],
+              "path": ["movies"]
+            }
+          },
+          "response": [
+            {
+              "name": "201 - Filme Criado",
+              "status": "Created",
+              "code": 201,
+              "body": "{\"message\": \"Filme criado com sucesso.\", \"movie\": {\"id\": 1, \"title\": \"Inception\", \"description\": \"...\", \"user_id\": 1}}"
+            }
+          ]
+        },
+        {
+          "name": "Listar Filmes",
+          "request": {
+            "method": "GET",
+            "header": [
+              {
+                "key": "Authorization",
+                "value": "Bearer {{token}}"
+              }
+            ],
+            "url": {
+              "raw": "{{base_url}}/movies",
+              "host": ["{{base_url}}"],
+              "path": ["movies"]
+            }
+          },
+          "response": [
+            {
+              "name": "200 - Sucesso",
+              "status": "OK",
+              "code": 200,
+              "body": "{\"movies\": [{\"id\": 1, \"title\": \"Inception\", \"user_id\": 1}]}"
+            }
+          ]
+        },
+        {
+          "name": "Detalhes do Filme",
+          "request": {
+            "method": "GET",
+            "header": [
+              {
+                "key": "Authorization",
+                "value": "Bearer {{token}}"
+              }
+            ],
+            "url": {
+              "raw": "{{base_url}}/movies/1",
+              "host": ["{{base_url}}"],
+              "path": ["movies", "1"]
+            }
+          }
+        },
+        {
+          "name": "Atualizar Filme",
+          "request": {
+            "method": "PUT",
+            "header": [
+              {
+                "key": "Authorization",
+                "value": "Bearer {{token}}"
+              },
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"title\": \"Inception - O Roubo\",\n  \"description\": \"Novo título\"\n}"
+            },
+            "url": {
+              "raw": "{{base_url}}/movies/1",
+              "host": ["{{base_url}}"],
+              "path": ["movies", "1"]
+            }
+          }
+        },
+        {
+          "name": "Deletar Filme",
+          "request": {
+            "method": "DELETE",
+            "header": [
+              {
+                "key": "Authorization",
+                "value": "Bearer {{token}}"
+              }
+            ],
+            "url": {
+              "raw": "{{base_url}}/movies/1",
+              "host": ["{{base_url}}"],
+              "path": ["movies", "1"]
+            }
+          },
+          "response": [
+            {
+              "name": "200 - Deletado",
+              "status": "OK",
+              "code": 200,
+              "body": "{\"message\": \"Filme excluído com sucesso.\"}"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "name": "Testes de Segurança",
+      "item": [
+        {
+          "name": "Requisição sem Token",
+          "request": {
+            "method": "GET",
+            "url": {
+              "raw": "{{base_url}}/movies",
+              "host": ["{{base_url}}"],
+              "path": ["movies"]
+            }
+          },
+          "response": [
+            {
+              "name": "401 - Acesso Negado",
+              "status": "Unauthorized",
+              "code": 401,
+              "body": "{\"msg\": \"Missing Authorization Header\"}"
+            }
+          ]
+        },
+        {
+          "name": "Token Inválido",
+          "request": {
+            "method": "GET",
+            "header": [
+              {
+                "key": "Authorization",
+                "value": "Bearer token.invalido.aqui"
+              }
+            ],
+            "url": {
+              "raw": "{{base_url}}/movies",
+              "host": ["{{base_url}}"],
+              "path": ["movies"]
+            }
+          },
+          "response": [
+            {
+              "name": "422 - Token Inválido",
+              "status": "Unprocessable Entity",
+              "code": 422,
+              "body": "{\"msg\": \"Invalid token\"}"
+            }
+          ]
+        },
+        {
+          "name": "Acessar Filme de Outro Usuário",
+          "request": {
+            "method": "GET",
+            "header": [
+              {
+                "key": "Authorization",
+                "value": "Bearer {{token}}"
+              }
+            ],
+            "url": {
+              "raw": "{{base_url}}/movies/999",
+              "host": ["{{base_url}}"],
+              "path": ["movies", "999"]
+            }
+          },
+          "response": [
+            {
+              "name": "404 - Não Encontrado",
+              "status": "Not Found",
+              "code": 404,
+              "body": "{\"message\": \"404 Not Found\"}"
+            }
+          ]
+        }
+      ]
+    }
+  ],
+  "variable": [
+    {
+      "key": "base_url",
+      "value": "http://127.0.0.1:5000",
+      "type": "string"
+    },
+    {
+      "key": "token",
+      "value": "",
+      "type": "string"
+    }
+  ]
+}

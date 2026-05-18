@@ -1,0 +1,51 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>{% block title %}Sistema de Usuários e Filmes{% endblock %}</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/styles.css') }}">
+    <script src="https://cdn.tailwindcss.com"></script>
+</head>
+<body>
+    <nav class="nav">
+        <a href="/">Home</a>
+        <a href="/login-page">Login</a>
+        <a href="/register-page">Cadastro</a>
+        {% if session.get('user') %}
+        <a href="/dashboard">Dashboard</a>
+        <a href="/movies-page">Meus Filmes</a>
+        <a href="#" onclick="logout()">Logout</a>
+        {% endif %}
+    </nav>
+
+    <div class="container">
+        {% block content %}{% endblock %}
+    </div>
+
+    <script>
+        function logout() {
+            localStorage.removeItem('token');
+            window.location.href = '/';
+        }
+
+        // Função para obter token
+        function getToken() {
+            return localStorage.getItem('token');
+        }
+
+        // Função para fazer requisições autenticadas
+        async function apiRequest(url, options = {}) {
+            const token = getToken();
+            if (token) {
+                options.headers = {
+                    ...options.headers,
+                    'Authorization': `Bearer ${token}`
+                };
+            }
+            const response = await fetch(url, options);
+            return response.json();
+        }
+    </script>
+</body>
+</html>
