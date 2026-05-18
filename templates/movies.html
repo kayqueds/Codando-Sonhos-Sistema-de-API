@@ -1,0 +1,110 @@
+{% extends "base.html" %}
+
+{% block title %}Meus Filmes Favoritos{% endblock %}
+
+{% block content %}
+<div class="header">
+    <h1 class="text-2xl font-bold">Meus Filmes Favoritos</h1>
+</div>
+
+<div class="card">
+    <h2 class="text-xl font-semibold mb-4">Adicionar Novo Filme</h2>
+    <form id="addMovieForm">
+        <div class="form-group">
+            <label for="title">Título:</label>
+            <input type="text" id="title" name="title" required>
+        </div>
+        <div class="form-group">
+            <label for="description">Descrição:</label>
+            <textarea id="description" name="description" rows="3"></textarea>
+        </div>
+        <button type="submit" class="btn">Adicionar Filme</button>
+    </form>
+    <div id="addMessage" class="mt-4"></div>
+</div>
+
+<div class="card">
+    <h2 class="text-xl font-semibold mb-4">Lista de Filmes</h2>
+    <div id="moviesList">
+        <p>Carregando filmes...</p>
+    </div>
+</div>
+
+<script>
+document.addEventListener('DOMContentLoaded', function() {
+    const token = getToken();
+    if (!token) {
+        window.location.href = '/login-page';
+        return;
+    }
+    loadMovies();
+});
+
+async function loadMovies() {
+    try {
+        const result = await apiRequest('/movies');
+        const moviesList = document.getElementById('moviesList');
+        if (result.movies && result.movies.length > 0) {
+            moviesList.innerHTML = result.movies.map(movie => `
+                <div class="border p-4 mb-2 rounded">
+                    <h3 class="font-bold">${movie.title}</h3>
+                    <p>${movie.description || 'Sem descrição'}</p>
+                    <button onclick="editMovie(${movie.id})" class="btn btn-secondary mr-2">Editar</button>
+                    <button onclick="deleteMovie(${movie.id})" class="btn" style="background-color: #dc3545;">Excluir</button>
+                </div>
+            `).join('');
+        } else {
+            moviesList.innerHTML = '<p>Nenhum filme favorito ainda.</p>';
+        }
+    } catch (error) {
+        document.getElementById('moviesList').innerHTML = '<p>Erro ao carregar filmes.</p>';
+    }
+}
+
+document.getElementById('addMovieForm').addEventListener('submit', async function(e) {
+    e.preventDefault();
+    const formData = new FormData(e.target);
+    const data = Object.fromEntries(formData);
+
+    try {
+        const result = await apiRequest('/movies', {
+            method: 'POST',
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify(data)
+        });
+
+        const messageDiv = document.getElementById('addMessage');
+        if (result.message) {
+            messageDiv.innerHTML = '<div class="alert alert-success">' + result.message + '</div>';
+            e.target.reset();
+            loadMovies();
+        } else {
+            messageDiv.innerHTML = '<div class="alert alert-error">' + (result.errors ? result.errors.join('<br>') : 'Erro ao adicionar') + '</div>';
+        }
+    } catch (error) {
+        document.getElementById('addMessage').innerHTML = '<div class="alert alert-error">Erro ao adicionar filme.</div>';
+    }
+});
+
+async function deleteMovie(movieId) {
+    if (!confirm('Tem certeza que deseja excluir este filme?')) return;
+
+    try {
+        const result = await apiRequest(`/movies/${movieId}`, { method: 'DELETE' });
+        if (result.message) {
+            alert('Filme excluído com sucesso!');
+            loadMovies();
+        } else {
+            alert('Erro ao excluir filme.');
+        }
+    } catch (error) {
+        alert('Erro ao excluir filme.');
+    }
+}
+
+function editMovie(movieId) {
+    // Para edição, poderia abrir um modal ou redirecionar para página de edição
+    alert('Funcionalidade de edição em desenvolvimento. ID: ' + movieId);
+}
+</script>
+{% endblock %}

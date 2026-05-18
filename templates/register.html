@@ -1,0 +1,54 @@
+{% extends "base.html" %}
+
+{% block title %}Cadastro - Sistema de Usuários{% endblock %}
+
+{% block content %}
+<div class="header">
+    <h1 class="text-2xl font-bold">Cadastrar Novo Usuário</h1>
+</div>
+
+<div class="card">
+    <form id="registerForm">
+        <div class="form-group">
+            <label for="name">Nome:</label>
+            <input type="text" id="name" name="name" required>
+        </div>
+        <div class="form-group">
+            <label for="email">Email:</label>
+            <input type="email" id="email" name="email" required>
+        </div>
+        <div class="form-group">
+            <label for="password">Senha:</label>
+            <input type="password" id="password" name="password" required>
+        </div>
+        <button type="submit" class="btn">Cadastrar</button>
+    </form>
+    <div id="message" class="mt-4"></div>
+</div>
+
+<script>
+document.getElementById('registerForm').addEventListener('submit', async function(e) {
+    e.preventDefault();
+    const formData = new FormData(e.target);
+    const data = Object.fromEntries(formData);
+
+    try {
+        const response = await fetch('/auth/register', {
+            method: 'POST',
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify(data)
+        });
+        const result = await response.json();
+
+        const messageDiv = document.getElementById('message');
+        if (response.ok) {
+            messageDiv.innerHTML = '<div class="alert alert-success">Usuário cadastrado com sucesso! <a href="/login-page">Fazer login</a></div>';
+        } else {
+            messageDiv.innerHTML = '<div class="alert alert-error">' + (result.errors ? result.errors.join('<br>') : result.message) + '</div>';
+        }
+    } catch (error) {
+        document.getElementById('message').innerHTML = '<div class="alert alert-error">Erro ao cadastrar.</div>';
+    }
+});
+</script>
+{% endblock %}

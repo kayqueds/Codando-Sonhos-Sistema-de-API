@@ -1,0 +1,67 @@
+✅ SOLUÇÃO DO ERRO: TemplateNotFound: home.html
+
+═══════════════════════════════════════════════════════════════
+
+## O Problema
+
+Flask não conseguia encontrar os arquivos HTML na pasta `templates/`.
+
+## A Causa
+
+Quando você roda `python -m src.app`, o Flask procura os templates
+em relação ao arquivo `app.py`, não na raiz do projeto.
+
+## A Solução
+
+Ajustei o `src/app.py` para especificar o caminho correto:
+
+```python
+import os
+
+def create_app(test_config=None):
+    # Definir caminhos corretos
+    basedir = os.path.abspath(os.path.dirname(os.path.dirname(__file__)))
+    template_folder = os.path.join(basedir, 'templates')
+    static_folder = os.path.join(basedir, 'static')
+    
+    app = Flask(__name__, 
+                template_folder=template_folder, 
+                static_folder=static_folder)
+```
+
+## Como Rodar Agora
+
+### Opção 1: Automática (recomendada)
+```bash
+python -m src
+```
+
+### Opção 2: Especificando o módulo
+```bash
+python -m src.app
+```
+
+### Opção 3: Direto do arquivo
+```bash
+python src/app.py
+```
+
+## ✅ Resultado
+
+Agora o servidor deve iniciar sem erros e você poderá acessar:
+
+http://127.0.0.1:5000
+
+═══════════════════════════════════════════════════════════════
+
+Se ainda tiver erro, tente:
+
+1. Parar o servidor (CTRL + C)
+2. Fechar o terminal
+3. Abrir um terminal novo
+4. Navegar até o projeto:
+   cd "c:\Users\Henrique\Desktop\PROJETOS FINAIS\Projeto_QA"
+5. Executar:
+   python -m src
+
+═══════════════════════════════════════════════════════════════

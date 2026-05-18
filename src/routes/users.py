@@ -31,7 +31,7 @@ def list_users():
 @users_bp.route('/<int:user_id>', methods=['GET'])
 @jwt_required()
 def get_user(user_id):
-    current_user_id = get_jwt_identity()
+    current_user_id = int(get_jwt_identity())
     if current_user_id != user_id:
         return jsonify({'message': 'Acesso negado.'}), 403
 
@@ -42,7 +42,7 @@ def get_user(user_id):
 @users_bp.route('/<int:user_id>', methods=['PUT', 'PATCH'])
 @jwt_required()
 def update_user(user_id):
-    current_user_id = get_jwt_identity()
+    current_user_id = int(get_jwt_identity())
     if current_user_id != user_id:
         return jsonify({'message': 'Acesso negado.'}), 403
 
@@ -69,7 +69,7 @@ def update_user(user_id):
 @users_bp.route('/<int:user_id>', methods=['DELETE'])
 @jwt_required()
 def delete_user(user_id):
-    current_user_id = get_jwt_identity()
+    current_user_id = int(get_jwt_identity())
     if current_user_id != user_id:
         return jsonify({'message': 'Acesso negado.'}), 403
 

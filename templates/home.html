@@ -1,0 +1,26 @@
+{% extends "base.html" %}
+
+{% block title %}Home - Sistema de Usuários e Filmes{% endblock %}
+
+{% block content %}
+<div class="header">
+    <h1 class="text-3xl font-bold">Bem-vindo ao Sistema de Usuários e Filmes</h1>
+    <p class="mt-4">Gerencie sua conta e seus filmes favoritos de forma segura.</p>
+</div>
+
+<div class="card">
+    <h2 class="text-xl font-semibold mb-4">Sobre o Sistema</h2>
+    <p>Este é um sistema completo para gerenciamento de usuários com autenticação JWT e funcionalidade de filmes favoritos.</p>
+    <ul class="mt-4 list-disc list-inside">
+        <li>Cadastro e login seguro</li>
+        <li>Gerenciamento de perfil</li>
+        <li>Lista de filmes favoritos pessoais</li>
+        <li>API REST completa</li>
+    </ul>
+</div>
+
+<div class="text-center mt-8">
+    <a href="/register-page" class="btn">Cadastrar-se</a>
+    <a href="/login-page" class="btn btn-secondary ml-4">Fazer Login</a>
+</div>
+{% endblock %}
