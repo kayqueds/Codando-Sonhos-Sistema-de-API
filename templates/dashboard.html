@@ -1,0 +1,33 @@
+{% extends "base.html" %}
+
+{% block title %}Dashboard - Sistema de Usuários{% endblock %}
+
+{% block content %}
+<div class="header">
+    <h1 class="text-2xl font-bold">Dashboard</h1>
+    <p>Bem-vindo! Aqui você pode gerenciar sua conta e filmes favoritos.</p>
+</div>
+
+<div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+    <div class="card">
+        <h2 class="text-xl font-semibold mb-4">Minha Conta</h2>
+        <p>Gerencie suas informações pessoais.</p>
+        <a href="#" class="btn">Editar Perfil</a>
+    </div>
+
+    <div class="card">
+        <h2 class="text-xl font-semibold mb-4">Meus Filmes Favoritos</h2>
+        <p>Veja e gerencie sua lista de filmes.</p>
+        <a href="/movies-page" class="btn">Ver Filmes</a>
+    </div>
+</div>
+
+<script>
+document.addEventListener('DOMContentLoaded', function() {
+    const token = getToken();
+    if (!token) {
+        window.location.href = '/login-page';
+    }
+});
+</script>
+{% endblock %}
