@@ -235,7 +235,6 @@ Veja `docs/BUGS_ENCONTRADOS.md` para detalhes
 
 **Status**: ✅ Projeto Completo  
 **Data**: 3 de maio de 2026  
-**Repositório**: https://github.com/kayqueds/Codando-Sonhos-Sistema-de-API
 
 
 
